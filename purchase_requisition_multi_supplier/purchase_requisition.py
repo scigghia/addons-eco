@@ -21,6 +21,7 @@
 
 from openerp.osv import osv, fields
 from openerp.tools.translate import _
+from openerp import models, api, _
 
 
 class purchase_requisition_line(osv.osv):
@@ -56,11 +57,12 @@ class purchase_requisition_line(osv.osv):
                                             ('in_purchase', 'In Progress'),
                                             ('done', 'Purchase Done'),
                                             ('cancel', 'Cancelled')]),
-        'name': fields.text('Description', required=True),
+        'name': fields.text('Description'),
     }
     _default = {
         'selected_flag': True,
         'po_line_ids': False,
+        'name': "/",
     }
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -76,10 +78,44 @@ class purchase_requisition_line(osv.osv):
                     self).write(cr, uid, ids, vals, context=context)
         return res
 
+    # usefull for onchange and create
+    def update_product_seller(self, cr, uid, product_id, context=None):
+        res = {
+            'sellers': False,
+            'domain': False,
+            'name': False,
+        }
+        product_product = self.pool['product.product']
+        product = product_product.browse(cr, uid, product_id, context)
+        dummy, name = product_product.name_get(cr, uid, product_id, context)[0]
+        res.update({'domain': {'partner_ids': [('is_company', '=', True)]}})
+        if product.description_purchase:
+            name += '\n' + product.description_purchase
+        elif product.description:
+            name += '\n' + product.description
+        if product.seller_ids:
+            # set first supplier in row
+            seller = [(4, se.name.id) for se in product.seller_ids]
+            res['sellers'] = seller
+            # list of all seller to set a domain in partner_ids fields
+            seller = [se.name.id for se in product.seller_ids]
+            res.update({'domain': {'partner_ids': [('id', 'in', seller)]}})
+        res['name'] = name
+        return res
+
     def create(self, cr, uid, vals, context=None):
+        # call onchange
+        res = self.update_product_seller(cr, uid, vals['product_id'])
         # Remove po_line_ids if duplicate data
         if context.get('copying', False):
             vals.update({'po_line_ids': False})
+        # product = self.pool['product.product'].browse(
+        #     cr, uid, vals['product_id'])
+        # seller = [(4, se.name.id) for se in product.seller_ids]
+        vals.update({'partner_ids': res['sellers']})
+        vals.update({'domain': res['domain']})
+        vals.update({'name': res['name']})
+        vals.update({'selected_flag': True})
         res_id = super(purchase_requisition_line, self).create(cr, uid, vals, context=context)
         return res_id
 
@@ -92,16 +128,39 @@ class purchase_requisition_line(osv.osv):
     def default_get(self, cr, uid, fields, context=None):
         return super(purchase_requisition_line, self).default_get(cr, uid, fields, context=context)
 
-    def onchange_product_id(self, cr, uid, ids, product_id, product_uom_id, context=None):
-        res = super(purchase_requisition_line, self).onchange_product_id(cr, uid, ids, product_id, product_uom_id, context=context)
+    # update to odoo 8
+    # TODO IMPLEMENTATION OF NEW API
+    def onchange_product_id(self, cr, uid, ids, product_id, product_uom_id,
+                            parent_analytic_account, analytic_account,
+                            parent_date, date, context=None):
+        res = super(purchase_requisition_line, self).onchange_product_id(
+            cr, uid, ids, product_id, product_uom_id, parent_analytic_account,
+            analytic_account, parent_date, date, context)
+        result = self.update_product_seller(cr, uid, product_id, context)
+        """
         product_product = self.pool.get('product.product')
-        product = product_product.browse(cr, uid, product_id, context=context)
-        dummy, name = product_product.name_get(cr, uid, product_id, context=context)[0]
+        product = product_product.browse(cr, uid, product_id, context)
+        dummy, name = product_product.name_get(cr, uid, product_id, context)[0]
         if product.description_purchase:
             name += '\n' + product.description_purchase
         elif product.description:
             name += '\n' + product.description
-        res['value'].update({'name': name})
+        """
+        # res.update({'domain': {'partner_ids': [('is_company', '=', True)]}})
+        """
+        if product.seller_ids:
+            # set first supplier in row
+            seller = [(4, se.name.id) for se in product.seller_ids]
+            res['value'].update({'partner_ids': seller})
+            # list of all seller to set a domain in partner_ids fields
+            seller = [se.name.id for se in product.seller_ids]
+            res.update({
+                'domain': {'partner_ids': [('id', 'in', seller)]}})
+        res['value'].update({'name': name, })
+        """
+        res['value'].update({'partner_ids': result['sellers']})
+        res['value'].update({'domain': result['domain']})
+        res['value'].update({'name': result['name']})
         return res
 
 purchase_requisition_line()
@@ -140,18 +199,10 @@ class purchase_requisition(osv.osv):
         'all_selected': True,
     }
 
-    def all_selected_onchange(self, cr, uid, ids, all_selected, line_ids, context=None):
-        res = {'value': {'line_ids': False}}
-        for index in range(len(line_ids)):
-            if line_ids[index][0] in (0, 1, 4):
-                if line_ids[index][2]:
-                    line_ids[index][2].update({'selected_flag': all_selected})
-                else:
-                    if line_ids[index][0] == 4:
-                        line_ids[index][0] = 1
-                    line_ids[index][2] = {'selected_flag': all_selected}
-        res['value']['line_ids'] = line_ids
-        return res
+    @api.onchange('all_selected')
+    def select_onchange(self):
+        for line in self.line_ids:
+            line.selected_flag = self.all_selected
 
     def update_done(self, cr, uid, ids, context=None):
         pr_recs = self.browse(cr, uid, ids, context=context)
@@ -169,7 +220,8 @@ class purchase_requisition(osv.osv):
         if not default:
             default = {}
         context.update({'copying': True})
-        return super(purchase_requisition, self).copy(cr, uid, id, default=default, context=context)
+        return super(purchase_requisition, self).copy(
+            cr, uid, id, default=default, context=context)
 
     def action_createPO(self, cr, uid, ids, context=None):
         selected = False
@@ -185,6 +237,40 @@ class purchase_requisition(osv.osv):
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
         return result
+
+    # import from Openerp 7 #
+
+    def _seller_details(self, cr, uid, requisition_line, supplier, context=None):
+        product_uom = self.pool.get('product.uom')
+        pricelist = self.pool.get('product.pricelist')
+        supplier_info = self.pool.get("product.supplierinfo")
+        product = requisition_line.product_id
+        default_uom_po_id = product.uom_po_id.id
+        qty = product_uom._compute_qty(cr, uid, requisition_line.product_uom_id.id, requisition_line.product_qty, default_uom_po_id)
+        seller_delay = 0.0
+        seller_price = False
+        seller_qty = False
+        for product_supplier in product.seller_ids:
+            if supplier.id ==  product_supplier.name and qty >= product_supplier.qty:
+                seller_delay = product_supplier.delay
+                seller_qty = product_supplier.qty
+        supplier_pricelist = supplier.property_product_pricelist_purchase or False
+        seller_price = pricelist.price_get(cr, uid, [supplier_pricelist.id], product.id, qty, supplier.id, {'uom': default_uom_po_id})[supplier_pricelist.id]
+        if seller_qty:
+            qty = max(qty,seller_qty)
+        date_planned = self._planned_date(requisition_line.requisition_id, seller_delay)
+        return seller_price, qty, default_uom_po_id, date_planned
+
+    def _planned_date(self, requisition, delay=0.0):
+        from datetime import datetime
+        from dateutil.relativedelta import relativedelta
+        company = requisition.company_id
+        date_planned = False
+        date_planned = datetime.today() - relativedelta(days=company.po_lead)
+        if delay:
+            date_planned -= relativedelta(days=delay)
+        return date_planned and date_planned.strftime('%Y-%m-%d %H:%M:%S') or False
+
 
 purchase_requisition()
 

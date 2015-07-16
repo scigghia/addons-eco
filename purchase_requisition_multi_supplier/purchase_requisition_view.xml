@@ -15,7 +15,10 @@
 	        		<attribute name="options">{'limit': 10, 'create': false, 'create_edit': false}</attribute>
 	        	</xpath>	        	
 	            <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']/tree[@string='Products']/field[@name='product_uom_id']" position="after">
-	            	<field name="partner_ids" widget="many2many_tags" domain="[('is_company','=',True)]" options="{'limit': 10, 'create': false, 'create_edit': false}" style="width: 10%%"/>
+	            	<field name="partner_ids" widget="many2many_tags"
+						   domain="[('is_company','=',True)]"
+						   options="{'limit': 10, 'create': false, 'create_edit': false}"
+						   style="width: 10%%"/>
 	           	 	<field name="state"/>
 	           	 	<button name="%(action_purchase_order_info)d" string="Purchase Orders" type="action" icon="gtk-justify-fill"/>	                                
 				</xpath>
@@ -24,13 +27,15 @@
 	            	<field name="selected_flag" on_change="selected_flag_onchange(selected_flag)"  nolabel="1" groups="purchase.group_purchase_user"/>
 	            </xpath>	 	   
 	            <xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='line_ids']" position="before">
-	        		<field name="all_selected" on_change="all_selected_onchange(all_selected,line_ids)" groups="purchase.group_purchase_user"/>
-	        		<label for="all_selected" string="Select All"  groups="purchase.group_purchase_user"/>
+	        		<field name="all_selected"  groups="purchase.group_purchase_user"/>
+	        		<!--on_change="all_selected_onchange(all_selected,line_ids)"-->
+                    <label for="all_selected" string="Select All"  groups="purchase.group_purchase_user"/>
+
 	        	</xpath>
 	        	<!-- Quotation Table -->
-	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/separator[@string='Quotations']" position="attributes">   
-	        		<attribute name="invisible">1</attribute>
-	        	</xpath>	        	
+	        	<!--<xpath expr="//form/sheet/notebook/page[@string='Products']/separator[@string='Quotations']" position="attributes">   -->
+	        		<!--<attribute name="invisible">1</attribute>-->
+	        	<!--</xpath>	        	-->
 	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/field[@name='purchase_ids']" position="replace">        		 
 	        	</xpath>
 	        	<xpath expr="//form/sheet/notebook/page[@string='Products']/div/button[@string='Request a Quotation']" position="attributes">

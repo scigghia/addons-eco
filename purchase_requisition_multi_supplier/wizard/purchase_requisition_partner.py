@@ -136,7 +136,7 @@ class purchase_requisition_partner(osv.osv_memory):
 
         supplier = res_partner.browse(cr, uid, supplier_id, context=context)
         supplier_pricelist = supplier.property_product_pricelist_purchase or False
-        location_id = requisition.warehouse_id.lot_input_id.id
+        location_id = requisition.warehouse_id.wh_input_stock_loc_id.id
         purchase_id = purchase_order.create(cr, uid, {
             'origin': requisition.name,
             'partner_id': supplier.id,
