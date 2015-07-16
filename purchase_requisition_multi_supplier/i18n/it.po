@@ -1,0 +1,258 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* purchase_requisition_multi_supplier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-13 10:24+0000\n"
+"PO-Revision-Date: 2015-07-13 10:24+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition,all_selected:0
+msgid "All Select(s)"
+msgstr "Seleziona Tutti"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.order.info.line,state:0
+#: selection:purchase.requisition.line,state:0
+msgid "Cancelled"
+msgstr "Annullato"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.order.info:purchase_requisition_multi_supplier.view_purchase_order_info_wizard
+msgid "Close"
+msgstr "Chiuso"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.order.info.line,state:0
+msgid "Confirmed"
+msgstr "Confermato"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info,create_uid:0
+#: field:purchase.order.info.line,create_uid:0
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info,create_date:0
+#: field:purchase.order.info.line,create_date:0
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.line,name:0
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.order.info.line,state:0
+msgid "Done"
+msgstr "Completato"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.order.info.line,state:0
+msgid "Draft"
+msgstr "Bozza"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.partner,group_flag:0
+msgid "Grouping"
+msgstr "Raggruppa"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info,id:0
+#: field:purchase.order.info.line,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.requisition.line,state:0
+msgid "In Progress"
+msgstr "In corso"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info,write_uid:0
+#: field:purchase.order.info.line,write_uid:0
+msgid "Last Updated by"
+msgstr "Aggiornamento da"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info,write_date:0
+#: field:purchase.order.info.line,write_date:0
+msgid "Last Updated on"
+msgstr "Aggiornamento il"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.requisition.line,state:0
+msgid "New"
+msgstr "Nuovo"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.partner,overwrite:0
+msgid "Overwrite Supplier"
+msgstr "Sovrascrivi Fornitore"
+
+#. module: purchase_requisition_multi_supplier
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:258
+#, python-format
+msgid "Please select Product(s)"
+msgstr "Seleziona Prodotto(i)"
+
+#. module: purchase_requisition_multi_supplier
+#: code:addons/purchase_requisition_multi_supplier/purchase_requisition.py:190
+#, python-format
+msgid "Please select the PR Line(s) at least one line"
+msgstr "Selzione almeno una riga"
+
+#. module: purchase_requisition_multi_supplier
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:237
+#, python-format
+msgid "Please select the supplier"
+msgstr "Definisci un fornitore"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition,progress_rate:0
+msgid "Progress Rate"
+msgstr "Avanzamento"
+
+#. module: purchase_requisition_multi_supplier
+#: selection:purchase.requisition.line,state:0
+msgid "Purchase Done"
+msgstr "Acquisto Completato"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.line,po_line_ids:0
+msgid "Purchase Line Orders"
+msgstr "Righa Ordine di Acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_order
+#: field:purchase.order.info.line,order_id:0
+msgid "Purchase Order"
+msgstr "Ordine Acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.actions.act_window,name:purchase_requisition_multi_supplier.action_purchase_order_info
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_order_info
+#: view:purchase.order.info:purchase_requisition_multi_supplier.view_purchase_order_info_wizard
+#: field:purchase.order.info.line,po_info_id:0
+msgid "Purchase Order Info"
+msgstr "Ordine di Acquisto Info"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_order_info_line
+#: field:purchase.order.info,po_info_line:0
+msgid "Purchase Order Info Lines"
+msgstr "Riga Ordine di Acquisto Info"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Riga Ordine d'Acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "Purchase Orders"
+msgstr "Ordini di Acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "Richiesta d'acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_requisition_line
+#: field:purchase.order.info,pr_line_id:0
+msgid "Purchase Requisition Line"
+msgstr "Linea di richiesta d'acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: model:ir.model,name:purchase_requisition_multi_supplier.model_purchase_requisition_partner
+msgid "Purchase Requisition Partner"
+msgstr "Partner richiesta ordine"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.line,pr_line_ids:0
+msgid "Purchase requisition Lines"
+msgstr "Riga richiesta di acquisto"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.line,selected_flag:0
+msgid "Select"
+msgstr "Seleziona"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "Select All"
+msgstr "Seleziona tutto"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.partner,all_supplier_flag:0
+msgid "Show All Suppliers"
+msgstr "Mostra tutti i fornitori"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info.line,state:0
+#: field:purchase.requisition.line,state:0
+msgid "Status"
+msgstr "Stato"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.order.info.line,partner_id:0
+msgid "Supplier"
+msgstr "Fornitore"
+
+#. module: purchase_requisition_multi_supplier
+#: field:purchase.requisition.line,partner_ids:0
+msgid "Suppliers"
+msgstr "Fornitori"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "Unit of Measure"
+msgstr "UoM"
+
+#. module: purchase_requisition_multi_supplier
+#: code:addons/purchase_requisition_multi_supplier/purchase_requisition.py:190
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:221
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:237
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:258
+#, python-format
+msgid "Warning!"
+msgstr "Attenzione!"
+
+#. module: purchase_requisition_multi_supplier
+#: code:addons/purchase_requisition_multi_supplier/wizard/purchase_requisition_partner.py:221
+#, python-format
+msgid "You have already one %s purchase order for this partner, you must cancel this purchase order to create a new quotation."
+msgstr "Hai già %s ordini per questo partner, annulla gli aquisti prima di creare una nuova quotazione"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "action_createPO"
+msgstr "action_createPO"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "object"
+msgstr "object"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition.partner:purchase_requisition_multi_supplier.view_purchase_requisition_partner_ext
+msgid "{'invisible':[('overwrite','=',False)],'required':[('overwrite','=',True)]}"
+msgstr "{'invisible':[('overwrite','=',False)],'required':[('overwrite','=',True)]}"
+
+#. module: purchase_requisition_multi_supplier
+#: view:purchase.requisition:purchase_requisition_multi_supplier.view_purchase_requisition_form_multi
+msgid "{'limit': 10, 'create': false, 'create_edit': false}"
+msgstr "{'limit': 10, 'create': false, 'create_edit': false}"
+
